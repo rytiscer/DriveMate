@@ -10,17 +10,13 @@ import BasicLayout from "../layouts/BasicLayout";
 import Main from "../pages/Main/Main";
 import Cars from "../pages/Cars/Cars";
 import AddCar from "../pages/AddCar/AddCar";
+import EditCar from "../pages/EditCar/EditCar";
 
 export const ROUTES = {
   MAIN: "/",
   CARS: "/cars",
   NEW_CAR: "/cars/add",
-  //   REGISTER: "/register",
-  //   ORDERS: "/orders",
-  //   NEW_ORDER: "/orders/new",
-  //   ORDER: "/orders/:id",
-  //   HOTELS: "/hotels",
-  //   NEW_HOTEL: "/hotels/new",
+  EDIT_CAR: "/cars/edit/:id",
 };
 
 export const routes = [
@@ -37,6 +33,11 @@ export const routes = [
   {
     path: ROUTES.NEW_CAR,
     Component: AddCar,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.EDIT_CAR,
+    Component: EditCar,
     Layout: BasicLayout,
   },
   //   {

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
-import { createCar } from "../../api/cars";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../routes/consts";
+import { useParams } from "react-router-dom";
+import { getCarById, editCar } from "../../api/cars";
 
-const AddCar = () => {
-  const navigate = useNavigate();
+const EditCar = () => {
+  const { id } = useParams();
+
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -18,6 +18,18 @@ const AddCar = () => {
     price: "",
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const carData = await getCarById(id);
+        setFormData(carData);
+      } catch (error) {
+        console.error("Error fetching car data:", error);
+      }
+    };
+    fetchData();
+  }, [id]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,14 +40,11 @@ const AddCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const confirmed = window.confirm("Are you sure you want to add this car?");
-    if (!confirmed) return;
     try {
-      await createCar(formData);
-      console.log("Car added successfully!");
-      navigate(ROUTES.CARS);
+      await editCar(id, formData);
+      console.log("Car updated successfully!");
     } catch (error) {
-      console.error("Error adding car:", error);
+      console.error("Error updating car:", error);
     }
   };
 
@@ -48,10 +57,9 @@ const AddCar = () => {
               name="brand"
               label="Brand"
               variant="outlined"
+              fullWidth
               value={formData.brand}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -59,10 +67,9 @@ const AddCar = () => {
               name="model"
               label="Model"
               variant="outlined"
+              fullWidth
               value={formData.model}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -70,10 +77,9 @@ const AddCar = () => {
               name="year"
               label="Year"
               variant="outlined"
+              fullWidth
               value={formData.year}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -81,10 +87,9 @@ const AddCar = () => {
               name="color"
               label="Color"
               variant="outlined"
+              fullWidth
               value={formData.color}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -92,10 +97,9 @@ const AddCar = () => {
               name="carType"
               label="Car Type"
               variant="outlined"
+              fullWidth
               value={formData.carType}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -103,10 +107,9 @@ const AddCar = () => {
               name="gearbox"
               label="Gearbox"
               variant="outlined"
+              fullWidth
               value={formData.gearbox}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -114,10 +117,9 @@ const AddCar = () => {
               name="img"
               label="Image URL"
               variant="outlined"
+              fullWidth
               value={formData.img}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -125,10 +127,9 @@ const AddCar = () => {
               name="fuelType"
               label="Fuel Type"
               variant="outlined"
+              fullWidth
               value={formData.fuelType}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -136,21 +137,18 @@ const AddCar = () => {
               name="price"
               label="Price"
               variant="outlined"
+              fullWidth
               value={formData.price}
               onChange={handleChange}
-              required
-              fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Add Car
-            </Button>
-          </Grid>
         </Grid>
+        <Button type="submit" variant="contained" color="primary">
+          Update Car
+        </Button>
       </form>
     </Container>
   );
 };
 
-export default AddCar;
+export default EditCar;

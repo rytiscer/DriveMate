@@ -14,6 +14,7 @@ import { fetchCars, deleteCar } from "../../api/cars";
 
 const Cars = () => {
   const [cars, setCars] = useState([]);
+  const [selectedFuelType, setSelectedFuelType] = useState("");
 
   useEffect(() => {
     const getCars = async () => {
@@ -42,59 +43,77 @@ const Cars = () => {
     }
   };
 
+  const handleFilterByFuelType = (e) => {
+    setSelectedFuelType(e.target.value);
+  };
+
   return (
     <>
       <div className={styles.carsTopContainer}>
-        <h1>Cars</h1>
+        <div className={styles.topRight}>
+          <h1>Cars</h1>
+          <select value={selectedFuelType} onChange={handleFilterByFuelType}>
+            <option value="">All</option>
+            <option value="Gasoline">Gasoline</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
+        </div>
         <Link to="/cars/add">
           <MainButton>Add Car</MainButton>
         </Link>
       </div>
       <Grid container spacing={2}>
-        {cars.map((car) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={car._id}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={car.img}
-                title={`${car.brand} ${car.model}`}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {car.brand} {car.model} {car.carId}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Year: {car.year}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Color: {car.color}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Gearbox: {car.gearbox}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Type: {car.carType}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Fuel: {car.fuelType}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Price: {car.price}$
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Edit</Button>
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => handleDeleteCar(car._id)}
-                >
-                  Delete
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+        {cars
+          .filter((car) =>
+            selectedFuelType ? car.fuelType === selectedFuelType : true
+          )
+          .map((car) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={car._id}>
+              <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image={car.img}
+                  title={`${car.brand} ${car.model}`}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {car.brand} {car.model} {car.carId}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Year: {car.year}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Color: {car.color}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Gearbox: {car.gearbox}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Type: {car.carType}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Fuel: {car.fuelType}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Price: {car.price}$
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Link to={`/cars/edit/${car._id}`}>
+                    <Button size="small">Edit</Button>
+                  </Link>
+                  <Button
+                    size="small"
+                    color="error"
+                    onClick={() => handleDeleteCar(car._id)}
+                  >
+                    Delete
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
     </>
   );
