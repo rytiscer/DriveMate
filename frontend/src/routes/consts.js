@@ -9,10 +9,12 @@ import BasicLayout from "../layouts/BasicLayout";
 // import NewHotel from "../pages/NewHotel/NewHotel";
 import Main from "../pages/Main/Main";
 import Cars from "../pages/Cars/Cars";
+import AddCar from "../pages/AddCar/AddCar";
 
 export const ROUTES = {
   MAIN: "/",
   CARS: "/cars",
+  NEW_CAR: "/cars/add",
   //   REGISTER: "/register",
   //   ORDERS: "/orders",
   //   NEW_ORDER: "/orders/new",
@@ -30,6 +32,11 @@ export const routes = [
   {
     path: ROUTES.CARS,
     Component: Cars,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.NEW_CAR,
+    Component: AddCar,
     Layout: BasicLayout,
   },
   //   {
