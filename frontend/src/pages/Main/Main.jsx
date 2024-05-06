@@ -1,5 +1,5 @@
 const Main = () => {
-  return <div>Main</div>;
+  return <div>Main puslapis</div>;
 };
 
 export default Main;

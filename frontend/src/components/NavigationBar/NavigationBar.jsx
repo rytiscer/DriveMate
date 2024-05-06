@@ -11,13 +11,12 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-
-import logo from "../../assets/logo.png";
-import styles from "../NavigationBar/NavigationBar.module.scss";
 import { Link } from "react-router-dom";
-import Home from "../../pages/Main/Main";
 
-const pages = ["Home", "Our cars", "Car rental", "Our services", "Contacts"];
+import styles from "../NavigationBar/NavigationBar.module.scss";
+import logo from "../../assets/logo.png";
+import { navigationBarLinks } from "../../routes/consts";
+
 const settings = ["Profile", "Logout"];
 
 function NavigationBar() {
@@ -90,11 +89,20 @@ function NavigationBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              {navigationBarLinks.map(
+                (
+                  link // Changed from pages.map() to navigationBarLinks.map()
+                ) => (
+                  <MenuItem key={link.title} onClick={handleCloseNavMenu}>
+                    <Link
+                      to={link.path}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      {link.title}
+                    </Link>
+                  </MenuItem>
+                )
+              )}
             </Menu>
           </Box>
           <Typography
@@ -116,21 +124,27 @@ function NavigationBar() {
             <img className={styles.logo} src={logo} alt="logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            {navigationBarLinks.map(
+              (
+                link // Changed from pages.map() to navigationBarLinks.map()
+              ) => (
+                <Button
+                  key={link.title}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "black", display: "block" }}
+                  component={Link}
+                  to={link.path}
+                >
+                  {link.title}
+                </Button>
+              )
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="User" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu

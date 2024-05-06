@@ -8,9 +8,11 @@ import BasicLayout from "../layouts/BasicLayout";
 // import Hotels from "../pages/Hotels/Hotels";
 // import NewHotel from "../pages/NewHotel/NewHotel";
 import Main from "../pages/Main/Main";
+import Cars from "../pages/Cars/Cars";
 
 export const ROUTES = {
   MAIN: "/",
+  CARS: "/cars",
   //   REGISTER: "/register",
   //   ORDERS: "/orders",
   //   NEW_ORDER: "/orders/new",
@@ -23,6 +25,11 @@ export const routes = [
   {
     path: ROUTES.MAIN,
     Component: Main,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.CARS,
+    Component: Cars,
     Layout: BasicLayout,
   },
   //   {
@@ -61,5 +68,9 @@ export const navigationBarLinks = [
   {
     title: "Home",
     path: ROUTES.MAIN,
+  },
+  {
+    title: "Cars",
+    path: ROUTES.CARS,
   },
 ];
