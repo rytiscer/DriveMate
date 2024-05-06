@@ -15,6 +15,7 @@ import { fetchCars, deleteCar } from "../../api/cars";
 const Cars = () => {
   const [cars, setCars] = useState([]);
   const [selectedFuelType, setSelectedFuelType] = useState("");
+  const [selectedGearboxType, setSelectedGearboxType] = useState("");
 
   useEffect(() => {
     const getCars = async () => {
@@ -47,16 +48,29 @@ const Cars = () => {
     setSelectedFuelType(e.target.value);
   };
 
+  const handleFilterByGearboxType = (e) => {
+    setSelectedGearboxType(e.target.value);
+  };
+
   return (
     <>
       <div className={styles.carsTopContainer}>
         <div className={styles.topRight}>
           <h1>Cars</h1>
           <select value={selectedFuelType} onChange={handleFilterByFuelType}>
-            <option value="">All</option>
+            <option value="">All fuel types</option>
             <option value="Gasoline">Gasoline</option>
             <option value="Diesel">Diesel</option>
             <option value="Hybrid">Hybrid</option>
+          </select>
+          <select
+            value={selectedGearboxType}
+            onChange={handleFilterByGearboxType}
+          >
+            <option value="">All gearbox types</option>
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+            <option value="CVT">CVT</option>
           </select>
         </div>
         <Link to="/cars/add">
@@ -67,6 +81,9 @@ const Cars = () => {
         {cars
           .filter((car) =>
             selectedFuelType ? car.fuelType === selectedFuelType : true
+          )
+          .filter((car) =>
+            selectedGearboxType ? car.gearbox === selectedGearboxType : true
           )
           .map((car) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={car._id}>

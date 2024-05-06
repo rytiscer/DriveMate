@@ -11,12 +11,17 @@ import Main from "../pages/Main/Main";
 import Cars from "../pages/Cars/Cars";
 import AddCar from "../pages/AddCar/AddCar";
 import EditCar from "../pages/EditCar/EditCar";
+import Clients from "../pages/Clients/Clients";
+import Orders from "../pages/Orders/Orders";
 
 export const ROUTES = {
   MAIN: "/",
   CARS: "/cars",
   NEW_CAR: "/cars/add",
   EDIT_CAR: "/cars/edit/:id",
+
+  CLIENTS: "/clients",
+  ORDERS: "/orders",
 };
 
 export const routes = [
@@ -38,6 +43,16 @@ export const routes = [
   {
     path: ROUTES.EDIT_CAR,
     Component: EditCar,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.CLIENTS,
+    Component: Clients,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.ORDERS,
+    Component: Orders,
     Layout: BasicLayout,
   },
   //   {
@@ -80,5 +95,13 @@ export const navigationBarLinks = [
   {
     title: "Cars",
     path: ROUTES.CARS,
+  },
+  {
+    title: "Clients",
+    path: ROUTES.CLIENTS,
+  },
+  {
+    title: "Orders",
+    path: ROUTES.ORDERS,
   },
 ];
