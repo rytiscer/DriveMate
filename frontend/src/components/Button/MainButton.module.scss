@@ -1,0 +1,15 @@
+.button {
+  background-color: yellowgreen;
+  color: red;
+
+  &:hover {
+    background-color: darkblue;
+  }
+
+  &:active {
+    background-color: lightblue;
+  }
+}
+.h1 {
+  color: red;
+}
