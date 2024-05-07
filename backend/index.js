@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const carRoutes = require("./routes/carRoutes");
 const userRoutes = require("./routes/userRoutes");
+const clientsRoutes = require("./routes/clientsRoutes");
 const { authenticateUser } = require("./middlewares/authMiddleware");
 require("dotenv").config();
 
@@ -11,6 +12,7 @@ app.use(cors());
 const port = process.env.PORT || 8080;
 
 app.use("/cars", authenticateUser, carRoutes);
+app.use("/clients", clientsRoutes);
 app.use("/register", userRoutes);
 app.use("/", userRoutes);
 
