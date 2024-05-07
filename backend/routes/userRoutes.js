@@ -56,6 +56,8 @@ router.post("/login", async (req, res) => {
   }
 
   try {
+    console.log("Login request data:", { email, password }); // Pridėti šį console.log
+
     // Surandame vartotoją pagal nurodytą el. paštą
     const existingUser = await client
       .db("demo1")

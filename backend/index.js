@@ -12,7 +12,7 @@ const port = process.env.PORT || 8080;
 
 app.use("/cars", authenticateUser, carRoutes);
 app.use("/register", userRoutes);
-app.use("/login", userRoutes);
+app.use("/", userRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on ${port} port`);
