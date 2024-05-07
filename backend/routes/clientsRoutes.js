@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
     const clientData = await client
       .db("demo1")
       .collection("clients")
-      .findOne({ _id: ObjectId(id) });
+      .findOne({ _id: new ObjectId(id) });
     if (!clientData) {
       return res.status(404).send({ error: "Client not found" });
     }
@@ -42,17 +42,14 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { name, lastName, email, phone, driving_experience } = req.body;
-    const result = await client
-      .db("demo1")
-      .collection("clients")
-      .insertOne({
-        name,
-        lastName,
-        email,
-        phone,
-        driving_experience,
-        cars: [],
-      });
+    const result = await client.db("demo1").collection("clients").insertOne({
+      name,
+      lastName,
+      email,
+      phone,
+      driving_experience,
+      carId,
+    });
     res.send(result.ops[0]);
   } catch (error) {
     console.error("Error adding client:", error);
@@ -64,13 +61,14 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, lastName, email, phone, driving_experience } = req.body;
+    const { name, lastName, email, phone, driving_experience, carId } =
+      req.body; // Pridėjome carId
     const result = await client
       .db("demo1")
       .collection("clients")
       .updateOne(
-        { _id: ObjectId(id) },
-        { $set: { name, lastName, email, phone, driving_experience } }
+        { _id: new ObjectId(id) },
+        { $set: { name, lastName, email, phone, driving_experience, carId } } // Pridėjome carId
       );
     if (result.modifiedCount === 0) {
       return res.status(404).send({ error: "Client not found" });
@@ -89,7 +87,7 @@ router.delete("/:id", async (req, res) => {
     const result = await client
       .db("demo1")
       .collection("clients")
-      .deleteOne({ _id: ObjectId(id) });
+      .deleteOne({ _id: new ObjectId(id) });
     if (result.deletedCount === 0) {
       return res.status(404).send({ error: "Client not found" });
     }
