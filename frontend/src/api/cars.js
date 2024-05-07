@@ -74,7 +74,7 @@ export const editCar = async (carId, updatedCar) => {
 
 export const getCarById = async (carId) => {
   try {
-    const response = await api.get(`/cars/${carId}`); // Pakeičiame axios.get() į api.get()
+    const response = await api.get(`/cars/${carId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching car by ID:", error);

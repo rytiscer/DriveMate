@@ -16,16 +16,21 @@ import { Link } from "react-router-dom";
 import styles from "../NavigationBar/NavigationBar.module.scss";
 import logo from "../../assets/logo.png";
 import { navigationBarLinks } from "../../routes/consts";
+import { useNavigate } from "react-router-dom";
 
-const settings = ["Profile", "Logout"];
+const settings = ["Profile"];
 
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -37,6 +42,29 @@ function NavigationBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   return (
     <AppBar sx={{ backgroundColor: "white", color: "black" }} position="static">
@@ -89,20 +117,16 @@ function NavigationBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {navigationBarLinks.map(
-                (
-                  link // Changed from pages.map() to navigationBarLinks.map()
-                ) => (
-                  <MenuItem key={link.title} onClick={handleCloseNavMenu}>
-                    <Link
-                      to={link.path}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {link.title}
-                    </Link>
-                  </MenuItem>
-                )
-              )}
+              {navigationBarLinks.map((link) => (
+                <MenuItem key={link.title} onClick={handleCloseNavMenu}>
+                  <Link
+                    to={link.path}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {link.title}
+                  </Link>
+                </MenuItem>
+              ))}
             </Menu>
           </Box>
           <Typography
@@ -124,27 +148,27 @@ function NavigationBar() {
             <img className={styles.logo} src={logo} alt="logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {navigationBarLinks.map(
-              (
-                link // Changed from pages.map() to navigationBarLinks.map()
-              ) => (
-                <Button
-                  key={link.title}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "black", display: "block" }}
-                  component={Link}
-                  to={link.path}
-                >
-                  {link.title}
-                </Button>
-              )
-            )}
+            {navigationBarLinks.map((link) => (
+              <Button
+                key={link.title}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "black", display: "block" }}
+                component={Link}
+                to={link.path}
+              >
+                {link.title}
+              </Button>
+            ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                {isLoggedIn ? (
+                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                ) : (
+                  <MenuIcon />
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -163,11 +187,27 @@ function NavigationBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {isLoggedIn ? (
+                <>
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem onClick={handleLogin}>
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleRegister}>
+                    <Typography textAlign="center">Register</Typography>
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </Box>
         </Toolbar>
@@ -175,4 +215,5 @@ function NavigationBar() {
     </AppBar>
   );
 }
+
 export default NavigationBar;
