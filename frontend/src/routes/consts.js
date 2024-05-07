@@ -5,6 +5,7 @@ import AddCar from "../pages/AddCar/AddCar";
 import EditCar from "../pages/EditCar/EditCar";
 import Clients from "../pages/Clients/Clients";
 import Orders from "../pages/Orders/Orders";
+import Register from "../pages/Register/Register";
 
 export const ROUTES = {
   MAIN: "/",
@@ -14,6 +15,7 @@ export const ROUTES = {
 
   CLIENTS: "/clients",
   ORDERS: "/orders",
+  REGISTER: "/register",
 };
 
 export const routes = [
@@ -47,6 +49,11 @@ export const routes = [
     Component: Orders,
     Layout: BasicLayout,
   },
+  {
+    path: ROUTES.REGISTER,
+    Component: Register,
+    Layout: BasicLayout,
+  },
 ];
 
 export const navigationBarLinks = [
@@ -65,5 +72,9 @@ export const navigationBarLinks = [
   {
     title: "Orders",
     path: ROUTES.ORDERS,
+  },
+  {
+    title: "Register",
+    path: ROUTES.REGISTER,
   },
 ];
