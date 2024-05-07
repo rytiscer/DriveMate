@@ -80,12 +80,4 @@ export const navigationBarLinks = [
     title: "Orders",
     path: ROUTES.ORDERS,
   },
-  {
-    title: "Register",
-    path: ROUTES.REGISTER,
-  },
-  {
-    title: "Login",
-    path: ROUTES.LOGIN,
-  },
 ];

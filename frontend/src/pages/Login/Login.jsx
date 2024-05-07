@@ -7,8 +7,11 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { loginUser } from "../../api/users";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,10 +26,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Siunčiami duomenys:", formData); // Pridedame console.log čia
+    console.log("Sending data", formData);
     try {
       await loginUser(formData);
-      // Jei prisijungimas sėkmingas, galite nukreipti vartotoją į kitą puslapį arba atlikti kitus veiksmus
+      navigate("/cars");
+      window.location.reload();
     } catch (error) {
       setError(error.message);
     }
