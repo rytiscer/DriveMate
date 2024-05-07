@@ -35,7 +35,7 @@ const Clients = () => {
       try {
         const names = await Promise.all(
           clients.map(async (client) => {
-            const carName = await getCarName(client.cars[0]);
+            const carName = await getCarName(client.carId); // Pakeičiame iš client.cars[0] į client.carId
             return carName;
           })
         );
@@ -79,7 +79,7 @@ const Clients = () => {
           <h1>Clients</h1>
         </div>
         <Link to="/clients/add">
-          <MainButton>Add Client</MainButton>
+          <MainButton>opa</MainButton>
         </Link>
       </div>
       <Grid container spacing={2}>

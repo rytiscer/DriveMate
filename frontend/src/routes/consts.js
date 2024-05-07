@@ -7,14 +7,18 @@ import Clients from "../pages/Clients/Clients";
 import Orders from "../pages/Orders/Orders";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
+import EditClient from "../pages/EditClient/EditClient";
 
 export const ROUTES = {
   MAIN: "/",
+
   CARS: "/cars",
   NEW_CAR: "/cars/add",
   EDIT_CAR: "/cars/edit/:id",
 
   CLIENTS: "/clients",
+
+  EDIT_CLIENT: "/clients/edit/:id",
   ORDERS: "/orders",
   REGISTER: "/register",
   LOGIN: "/login",
@@ -59,6 +63,11 @@ export const routes = [
   {
     path: ROUTES.LOGIN,
     Component: Login,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.EDIT_CLIENT,
+    Component: EditClient,
     Layout: BasicLayout,
   },
 ];
