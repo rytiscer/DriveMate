@@ -1,14 +1,28 @@
 .carsTopContainer {
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px 15px;
 
   .topRight {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
 
     select {
       margin: 0 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .carsTopContainer {
+    .topRight {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
+      select {
+        margin: 10px 0;
+      }
     }
   }
 }

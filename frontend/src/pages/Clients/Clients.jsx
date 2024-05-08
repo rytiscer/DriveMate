@@ -1,10 +1,13 @@
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+// import Grid from "@mui/material/Grid";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Grid,
+  TextField,
+} from "@mui/material";
 import MainButton from "../../components/Button/MainButton";
 import styles from "./Clients.module.scss";
 import { Link } from "react-router-dom";
@@ -20,14 +23,12 @@ const Clients = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const isAuthenticated = checkAuthentication(); // Patikriname autentifikaciją
-    setIsAuthenticated(isAuthenticated); // Nustatome autentifikacijos būseną
+    const isAuthenticated = checkAuthentication();
+    setIsAuthenticated(isAuthenticated);
   }, []);
 
   const checkAuthentication = () => {
-    // Gauti JWT iš saugyklos (local storage, cookies ar kt.)
     const jwt = localStorage.getItem("token");
-    // Patikrinti, ar JWT yra ir ar jis teisingas (galbūt patikrinimas serverio pusėje)
     return jwt ? true : false;
   };
 
@@ -116,13 +117,13 @@ const Clients = () => {
               />
             </div>
             <Link to="/clients/add">
-              <MainButton>Add Client</MainButton>
+              <MainButton className={styles.addButton}>Add Client</MainButton>
             </Link>
           </div>
           <Grid container spacing={2}>
             {filteredClients.map((client, index) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={client._id}>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 400 }}>
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {client.name} {client.lastName}
