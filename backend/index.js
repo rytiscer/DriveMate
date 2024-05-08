@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(cors());
 const port = process.env.PORT || 8080;
 
-app.use("/cars", authenticateUser, carRoutes);
-app.use("/clients", clientsRoutes);
+app.use("/cars", carRoutes);
+app.use("/clients", authenticateUser, clientsRoutes);
 app.use("/register", userRoutes);
 app.use("/", userRoutes);
 

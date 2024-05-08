@@ -8,6 +8,7 @@ import Orders from "../pages/Orders/Orders";
 import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
 import EditClient from "../pages/EditClient/EditClient";
+import AddClient from "../pages/AddClient/AddClient";
 
 export const ROUTES = {
   MAIN: "/",
@@ -17,7 +18,7 @@ export const ROUTES = {
   EDIT_CAR: "/cars/edit/:id",
 
   CLIENTS: "/clients",
-
+  NEW_CLIENT: "/clients/add",
   EDIT_CLIENT: "/clients/edit/:id",
   ORDERS: "/orders",
   REGISTER: "/register",
@@ -68,6 +69,11 @@ export const routes = [
   {
     path: ROUTES.EDIT_CLIENT,
     Component: EditClient,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.NEW_CLIENT,
+    Component: AddClient,
     Layout: BasicLayout,
   },
 ];

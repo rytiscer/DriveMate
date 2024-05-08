@@ -16,6 +16,12 @@ const Cars = () => {
   const [cars, setCars] = useState([]);
   const [selectedFuelType, setSelectedFuelType] = useState("");
   const [selectedGearboxType, setSelectedGearboxType] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const isAuthenticated = checkAuthentication(); // Patikriname autentifikaciją
+    setIsAuthenticated(isAuthenticated); // Nustatome autentifikacijos būseną
+  }, []);
 
   useEffect(() => {
     const getCars = async () => {
@@ -29,6 +35,13 @@ const Cars = () => {
 
     getCars();
   }, []);
+
+  const checkAuthentication = () => {
+    // Gauti JWT iš saugyklos (local storage, cookies ar kt.)
+    const jwt = localStorage.getItem("token");
+    // Patikrinti, ar JWT yra ir ar jis teisingas (galbūt patikrinimas serverio pusėje)
+    return jwt ? true : false;
+  };
 
   const handleDeleteCar = async (carId) => {
     const confirmDelete = window.confirm(
@@ -70,11 +83,10 @@ const Cars = () => {
             <option value="">All gearbox types</option>
             <option value="Manual">Manual</option>
             <option value="Automatic">Automatic</option>
-            <option value="CVT">CVT</option>
           </select>
         </div>
         <Link to="/cars/add">
-          <MainButton>Add Car</MainButton>
+          {isAuthenticated && <MainButton>Add Car</MainButton>}
         </Link>
       </div>
       <Grid container spacing={2}>
@@ -117,16 +129,20 @@ const Cars = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to={`/cars/edit/${car._id}`}>
-                    <Button size="small">Edit</Button>
-                  </Link>
-                  <Button
-                    size="small"
-                    color="error"
-                    onClick={() => handleDeleteCar(car._id)}
-                  >
-                    Delete
-                  </Button>
+                  {isAuthenticated && (
+                    <Link to={`/cars/edit/${car._id}`}>
+                      <Button size="small">Edit</Button>
+                    </Link>
+                  )}
+                  {isAuthenticated && (
+                    <Button
+                      size="small"
+                      color="error"
+                      onClick={() => handleDeleteCar(car._id)}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Grid>
