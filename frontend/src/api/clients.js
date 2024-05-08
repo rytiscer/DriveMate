@@ -1,19 +1,18 @@
-import axios from "axios";
-import { API } from "./consts";
+import api from "./api"; // Importuojame jūsų sukurta api instanciją
 
 export const fetchClients = async () => {
-  const response = await axios.get(`${API}/clients`);
+  const response = await api.get("/clients");
   return response.data;
 };
 
 export const createClient = async (newClient) => {
-  const response = await axios.post(`${API}/clients`, newClient);
+  const response = await api.post("/clients", newClient);
   return response.data;
 };
 
 export const deleteClient = async (clientId) => {
   try {
-    await axios.delete(`${API}/clients/${clientId}`);
+    await api.delete(`/clients/${clientId}`);
     console.log("Client deleted successfully!");
   } catch (error) {
     console.error("Error deleting client:", error);
@@ -23,7 +22,7 @@ export const deleteClient = async (clientId) => {
 
 export const editClient = async (clientId, updatedClient) => {
   try {
-    await axios.put(`${API}/clients/${clientId}`, updatedClient);
+    await api.put(`/clients/${clientId}`, updatedClient);
     console.log("Client updated successfully!");
   } catch (error) {
     console.error("Error updating client:", error);
@@ -33,7 +32,7 @@ export const editClient = async (clientId, updatedClient) => {
 
 export const getClientById = async (clientId) => {
   try {
-    const response = await axios.get(`${API}/clients/${clientId}`);
+    const response = await api.get(`/clients/${clientId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching client by ID:", error);

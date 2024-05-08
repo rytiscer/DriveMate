@@ -4,6 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import MainButton from "../../components/Button/MainButton";
 import styles from "./Clients.module.scss";
 import { Link } from "react-router-dom";
@@ -15,6 +16,20 @@ import { getCarById } from "../../api/cars";
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [carNames, setCarNames] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const isAuthenticated = checkAuthentication(); // Patikriname autentifikaciją
+    setIsAuthenticated(isAuthenticated); // Nustatome autentifikacijos būseną
+  }, []);
+
+  const checkAuthentication = () => {
+    // Gauti JWT iš saugyklos (local storage, cookies ar kt.)
+    const jwt = localStorage.getItem("token");
+    // Patikrinti, ar JWT yra ir ar jis teisingas (galbūt patikrinimas serverio pusėje)
+    return jwt ? true : false;
+  };
 
   useEffect(() => {
     const fetchClientData = async () => {
@@ -75,56 +90,77 @@ const Clients = () => {
     }
   };
 
+  const filteredClients = clients.filter(
+    (client) =>
+      client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      client.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
-      <div className={styles.clientsTopContainer}>
-        <div className={styles.topRight}>
-          <h1>Clients</h1>
-        </div>
-        <Link to="/clients/add">
-          <MainButton>Add Client</MainButton>
-        </Link>
-      </div>
-      <Grid container spacing={2}>
-        {clients.map((client, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={client._id}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {client.name} {client.lastName}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Email: {client.email}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Phone: {client.phone}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Driving Experience: {client.driving_experience} years
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Car:{" "}
-                  {carNames[index] !== undefined
-                    ? carNames[index]
-                    : "No Car Assigned"}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Link to={`/clients/edit/${client._id}`}>
-                  <Button size="small">Edit</Button>
-                </Link>
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => handleDeleteClient(client._id)}
-                >
-                  Delete
-                </Button>
-              </CardActions>
-            </Card>
+      {!isAuthenticated && (
+        <div className={styles.errorMessage}>Please log in to view clients</div>
+      )}
+      {isAuthenticated && (
+        <>
+          <div className={styles.clientsTopContainer}>
+            <div className={styles.topRight}>
+              <h1>Clients</h1>
+              <TextField
+                className={styles.searchField}
+                label="Search"
+                variant="outlined"
+                size="small"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <Link to="/clients/add">
+              <MainButton>Add Client</MainButton>
+            </Link>
+          </div>
+          <Grid container spacing={2}>
+            {filteredClients.map((client, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={client._id}>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {client.name} {client.lastName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Email: {client.email}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Phone: {client.phone}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Driving Experience: {client.driving_experience} years
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Car:{" "}
+                      {carNames[index] !== undefined
+                        ? carNames[index]
+                        : "No Car Assigned"}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Link to={`/clients/edit/${client._id}`}>
+                      <Button size="small">Edit</Button>
+                    </Link>
+                    <Button
+                      size="small"
+                      color="error"
+                      onClick={() => handleDeleteClient(client._id)}
+                    >
+                      Delete
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      )}
     </>
   );
 };
