@@ -2,7 +2,6 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MainButton from "../../components/Button/MainButton";
@@ -35,7 +34,7 @@ const Clients = () => {
       try {
         const names = await Promise.all(
           clients.map(async (client) => {
-            const carName = await getCarName(client.carId); // Pakeičiame iš client.cars[0] į client.carId
+            const carName = await getCarName(client.carId);
             return carName;
           })
         );
@@ -65,7 +64,11 @@ const Clients = () => {
   const getCarName = async (carId) => {
     try {
       const carData = await getCarById(carId);
-      return `${carData.brand} ${carData.model}`;
+      if (carData && carData.brand && carData.model) {
+        return `${carData.brand} ${carData.model}`;
+      } else {
+        return "No Car Assigned";
+      }
     } catch (error) {
       console.error("Error fetching car name:", error);
       return "Unknown Car";
@@ -79,17 +82,13 @@ const Clients = () => {
           <h1>Clients</h1>
         </div>
         <Link to="/clients/add">
-          <MainButton>opa</MainButton>
+          <MainButton>Add Client</MainButton>
         </Link>
       </div>
       <Grid container spacing={2}>
         {clients.map((client, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={client._id}>
             <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                sx={{ height: 140 }}
-                title={`${client.name} ${client.lastName}`}
-              />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {client.name} {client.lastName}
@@ -104,7 +103,10 @@ const Clients = () => {
                   Driving Experience: {client.driving_experience} years
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Car: {carNames[index] || "No Car Assigned"}
+                  Car:{" "}
+                  {carNames[index] !== undefined
+                    ? carNames[index]
+                    : "No Car Assigned"}
                 </Typography>
               </CardContent>
               <CardActions>
