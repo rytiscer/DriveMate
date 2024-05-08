@@ -9,6 +9,7 @@ import Register from "../pages/Register/Register";
 import Login from "../pages/Login/Login";
 import EditClient from "../pages/EditClient/EditClient";
 import AddClient from "../pages/AddClient/AddClient";
+import AddOrder from "../pages/AddOrder/AddOrder";
 
 export const ROUTES = {
   MAIN: "/",
@@ -21,6 +22,7 @@ export const ROUTES = {
   NEW_CLIENT: "/clients/add",
   EDIT_CLIENT: "/clients/edit/:id",
   ORDERS: "/orders",
+  NEW_ORDER: "/orders/add",
   REGISTER: "/register",
   LOGIN: "/login",
 };
@@ -74,6 +76,11 @@ export const routes = [
   {
     path: ROUTES.NEW_CLIENT,
     Component: AddClient,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.NEW_ORDER,
+    Component: AddOrder,
     Layout: BasicLayout,
   },
 ];
