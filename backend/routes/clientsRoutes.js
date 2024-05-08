@@ -38,10 +38,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Add a new client
 router.post("/", async (req, res) => {
   try {
-    const { name, lastName, email, phone, driving_experience } = req.body;
+    const { name, lastName, email, phone, driving_experience, carId } =
+      req.body;
+
     const result = await client.db("demo1").collection("clients").insertOne({
       name,
       lastName,
@@ -50,9 +51,12 @@ router.post("/", async (req, res) => {
       driving_experience,
       carId,
     });
-    res.send(result.ops[0]);
+
+    res
+      .status(201)
+      .send({ message: "Car added successfully", carId: result.insertedId });
   } catch (error) {
-    console.error("Error adding client:", error);
+    console.error("Error adding car:", error);
     return res.status(500).send({ error });
   }
 });
