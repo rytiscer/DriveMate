@@ -6,17 +6,17 @@ import {
   Card,
   CardContent,
   Typography,
-  List,
-  ListItem,
   CardActions,
   Button,
   Grid,
+  Container,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [clients, setClients] = useState({});
+  const [cars, setCars] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +27,16 @@ const Orders = () => {
         const clientsData = await fetchClients();
         const clientsMap = {};
         clientsData.forEach((client) => {
-          clientsMap[client._id] = client;
+          clientsMap[client._id] = `${client.name} ${client.lastName}`;
         });
         setClients(clientsMap);
+
+        const carsData = await fetchCars();
+        const carsMap = {};
+        carsData.forEach((car) => {
+          carsMap[car._id] = car.brand + " " + car.model;
+        });
+        setCars(carsMap);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -40,7 +47,7 @@ const Orders = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleString(); // Paverčia į suprantamą datą ir laiką
+    return date.toLocaleString();
   };
 
   const handleDeleteOrder = async (orderId) => {
@@ -52,59 +59,80 @@ const Orders = () => {
         await deleteOrder(orderId);
         setOrders(orders.filter((order) => order._id !== orderId));
       } catch (error) {
-        console.error("Error deleting order:", error);
+        console.error("Error deleting client:", error);
       }
     }
   };
 
   return (
-    <div>
+    <Container>
       <h2>Orders</h2>
       <Grid container spacing={2}>
         {orders.map((order) => (
           <Grid item xs={12} md={6} lg={4} key={order._id}>
             <Card>
               <CardContent>
-                <Typography variant="h5" component="div">
-                  Client: {clients[order.clientId]?.name}{" "}
-                  {clients[order.clientId]?.lastName}
-                </Typography>
-                <Typography variant="h6" component="div">
-                  Car: {order.carId}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  Start Date: {formatDate(order.startDate)}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  End Date: {formatDate(order.endDate)}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  Pickup Location: {order.pickupLocation}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  Return Location: {order.returnLocation}
-                </Typography>
-                <Typography variant="body1" component="div">
-                  Total Price: {order.totalPrice} $
-                </Typography>
+                {clients[order.clientId] ? (
+                  <>
+                    <Typography variant="h5" component="div">
+                      Client Name: {clients[order.clientId]}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      Email: {clients[order.clientId].email}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      Phone: {clients[order.clientId].phone}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="body1" component="div" color="error">
+                    Order is not valid: Client not found
+                  </Typography>
+                )}
+                {cars[order.carId] ? (
+                  <>
+                    <Typography variant="h6" component="div">
+                      Car Name: {cars[order.carId]}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      Start Date: {formatDate(order.startDate)}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      End Date: {formatDate(order.endDate)}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      Pickup Location: {order.pickupLocation}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      Return Location: {order.returnLocation}
+                    </Typography>
+                    <Typography variant="body1" component="div">
+                      Total Price: {order.totalPrice} $
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="body1" component="div" color="error">
+                    Order is not valid: Car not found
+                  </Typography>
+                )}
               </CardContent>
               <CardActions>
-                <Link to={`/clients/edit/${order.clientId}`}>
-                  <Button size="small">Edit Client</Button>
+                <Link to={`/clients/edit/${order._id}`}>
+                  <Button size="small">Edit</Button>
                 </Link>
                 <Button
                   size="small"
                   color="error"
                   onClick={() => handleDeleteOrder(order._id)}
                 >
-                  Delete Order
+                  Delete
                 </Button>
               </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Container>
   );
 };
 
