@@ -98,10 +98,10 @@ const Cars = () => {
             selectedGearboxType ? car.gearbox === selectedGearboxType : true
           )
           .map((car) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={car._id}>
-              <Card sx={{ maxWidth: 345 }}>
+            <Grid item xs={12} md={6} lg={4} key={car._id}>
+              <Card sx={{ maxWidth: 400 }}>
                 <CardMedia
-                  sx={{ height: 140 }}
+                  sx={{ height: 200 }}
                   image={car.img}
                   title={`${car.brand} ${car.model}`}
                 />
