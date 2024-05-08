@@ -3,6 +3,7 @@ const cors = require("cors");
 const carRoutes = require("./routes/carRoutes");
 const userRoutes = require("./routes/userRoutes");
 const clientsRoutes = require("./routes/clientsRoutes");
+const ordersRoutes = require("./routes/ordersRoutes");
 const { authenticateUser } = require("./middlewares/authMiddleware");
 require("dotenv").config();
 
@@ -15,6 +16,7 @@ app.use("/cars", carRoutes);
 app.use("/clients", authenticateUser, clientsRoutes);
 app.use("/register", userRoutes);
 app.use("/", userRoutes);
+app.use("/orders", ordersRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on ${port} port`);
