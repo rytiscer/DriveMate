@@ -19,6 +19,17 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [clients, setClients] = useState({});
   const [cars, setCars] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const isAuthenticated = checkAuthentication();
+    setIsAuthenticated(isAuthenticated);
+  }, []);
+
+  const checkAuthentication = () => {
+    const jwt = localStorage.getItem("token");
+    return jwt ? true : false;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,75 +78,92 @@ const Orders = () => {
   };
 
   return (
-    <Container>
-      <div className={styles.ordersTopContainer}>
-        <div className={styles.topRight}>
-          <h1>Orders</h1>
-        </div>
-        <Link to="/orders/add">
-          <MainButton className={styles.addButton}>Add Client</MainButton>
-        </Link>
-      </div>
-      <Grid container spacing={2}>
-        {orders.map((order) => (
-          <Grid item xs={12} md={6} lg={4} key={order._id}>
-            <Card>
-              <CardContent style={{ minHeight: "220px" }}>
-                {clients[order.clientId] ? (
-                  <>
-                    <Typography variant="h5" component="div">
-                      Client: {clients[order.clientId]}
-                    </Typography>
-                  </>
-                ) : (
-                  <Typography variant="body1" component="div" color="error">
-                    Order is not valid: Client not found
-                  </Typography>
-                )}
-                {cars[order.carId] ? (
-                  <>
-                    <Typography variant="h6" component="div">
-                      Car: {cars[order.carId]}
-                    </Typography>
-                    <Typography variant="body2" component="div">
-                      Start Date: {formatDate(order.startDate)}
-                    </Typography>
-                    <Typography variant="body2" component="div">
-                      End Date: {formatDate(order.endDate)}
-                    </Typography>
-                    <Typography variant="body2" component="div">
-                      Pickup Location: {order.pickupLocation}
-                    </Typography>
-                    <Typography variant="body2" component="div">
-                      Return Location: {order.returnLocation}
-                    </Typography>
-                    <Typography variant="body2" component="div">
-                      Total Price: {order.totalPrice} $
-                    </Typography>
-                  </>
-                ) : (
-                  <Typography variant="body1" component="div" color="error">
-                    Order is not valid: Car not found
-                  </Typography>
-                )}
-              </CardContent>
-              <CardActions>
-                <Link to={`/orders/edit/${order._id}`}>
-                  <Button size="small">Edit</Button>
-                </Link>
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => handleDeleteOrder(order._id)}
-                >
-                  Delete
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    <>
+      {!isAuthenticated && (
+        <div className={styles.errorMessage}>Please log in to view orders</div>
+      )}
+      {isAuthenticated && (
+        <>
+          <Container>
+            <div className={styles.ordersTopContainer}>
+              <div className={styles.topRight}>
+                <h1>Orders</h1>
+              </div>
+              <Link to="/orders/add">
+                <MainButton className={styles.addButton}>Add Client</MainButton>
+              </Link>
+            </div>
+            <Grid container spacing={2}>
+              {orders.map((order) => (
+                <Grid item xs={12} md={6} lg={4} key={order._id}>
+                  <Card>
+                    <CardContent style={{ minHeight: "220px" }}>
+                      {clients[order.clientId] ? (
+                        <>
+                          <Typography variant="h5" component="div">
+                            Client: {clients[order.clientId]}
+                          </Typography>
+                        </>
+                      ) : (
+                        <Typography
+                          variant="body1"
+                          component="div"
+                          color="error"
+                        >
+                          Order is not valid: Client not found
+                        </Typography>
+                      )}
+                      {cars[order.carId] ? (
+                        <>
+                          <Typography variant="h6" component="div">
+                            Car: {cars[order.carId]}
+                          </Typography>
+                          <Typography variant="body2" component="div">
+                            Start Date: {formatDate(order.startDate)}
+                          </Typography>
+                          <Typography variant="body2" component="div">
+                            End Date: {formatDate(order.endDate)}
+                          </Typography>
+                          <Typography variant="body2" component="div">
+                            Pickup Location: {order.pickupLocation}
+                          </Typography>
+                          <Typography variant="body2" component="div">
+                            Return Location: {order.returnLocation}
+                          </Typography>
+                          <Typography variant="body2" component="div">
+                            Total Price: {order.totalPrice} $
+                          </Typography>
+                        </>
+                      ) : (
+                        <Typography
+                          variant="body1"
+                          component="div"
+                          color="error"
+                        >
+                          Order is not valid: Car not found
+                        </Typography>
+                      )}
+                    </CardContent>
+                    <CardActions>
+                      <Link to={`/orders/edit/${order._id}`}>
+                        <Button size="small">Edit</Button>
+                      </Link>
+                      <Button
+                        size="small"
+                        color="error"
+                        onClick={() => handleDeleteOrder(order._id)}
+                      >
+                        Delete
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </>
+      )}
+    </>
   );
 };
 
