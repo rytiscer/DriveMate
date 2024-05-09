@@ -17,7 +17,7 @@ app.use("/cars", carRoutes);
 app.use("/clients", authenticateUser, clientsRoutes);
 app.use("/register", userRoutes);
 app.use("/", userRoutes);
-app.use("/orders", ordersRoutes);
+app.use("/orders", authenticateUser, ordersRoutes);
 app.use("/services", serviceRoutes);
 
 app.listen(port, () => {
