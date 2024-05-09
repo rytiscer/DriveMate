@@ -60,7 +60,7 @@ const AddOrder = () => {
       const totalPrice = calculateTotalPrice(formData);
       const newOrder = { ...formData, totalPrice };
       await createOrder(newOrder);
-      alert("Order added successfully!");
+      alert("Order updated successfully!");
       navigate(ROUTES.ORDERS);
     } catch (error) {
       alert("Error adding order:", error);

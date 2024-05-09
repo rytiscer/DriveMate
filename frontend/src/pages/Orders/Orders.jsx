@@ -80,11 +80,11 @@ const Orders = () => {
         {orders.map((order) => (
           <Grid item xs={12} md={6} lg={4} key={order._id}>
             <Card>
-              <CardContent style={{ minHeight: "250px" }}>
+              <CardContent style={{ minHeight: "220px" }}>
                 {clients[order.clientId] ? (
                   <>
                     <Typography variant="h5" component="div">
-                      Client Name: {clients[order.clientId]}
+                      Client: {clients[order.clientId]}
                     </Typography>
                   </>
                 ) : (
@@ -95,21 +95,21 @@ const Orders = () => {
                 {cars[order.carId] ? (
                   <>
                     <Typography variant="h6" component="div">
-                      Car Name: {cars[order.carId]}
+                      Car: {cars[order.carId]}
                     </Typography>
-                    <Typography variant="body1" component="div">
+                    <Typography variant="body2" component="div">
                       Start Date: {formatDate(order.startDate)}
                     </Typography>
-                    <Typography variant="body1" component="div">
+                    <Typography variant="body2" component="div">
                       End Date: {formatDate(order.endDate)}
                     </Typography>
-                    <Typography variant="body1" component="div">
+                    <Typography variant="body2" component="div">
                       Pickup Location: {order.pickupLocation}
                     </Typography>
-                    <Typography variant="body1" component="div">
+                    <Typography variant="body2" component="div">
                       Return Location: {order.returnLocation}
                     </Typography>
-                    <Typography variant="body1" component="div">
+                    <Typography variant="body2" component="div">
                       Total Price: {order.totalPrice} $
                     </Typography>
                   </>
