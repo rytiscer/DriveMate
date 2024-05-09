@@ -4,6 +4,7 @@ const carRoutes = require("./routes/carRoutes");
 const userRoutes = require("./routes/userRoutes");
 const clientsRoutes = require("./routes/clientsRoutes");
 const ordersRoutes = require("./routes/ordersRoutes");
+const serviceRoutes = require("./routes/serviceRoutes");
 const { authenticateUser } = require("./middlewares/authMiddleware");
 require("dotenv").config();
 
@@ -17,6 +18,7 @@ app.use("/clients", authenticateUser, clientsRoutes);
 app.use("/register", userRoutes);
 app.use("/", userRoutes);
 app.use("/orders", ordersRoutes);
+app.use("/services", serviceRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on ${port} port`);
