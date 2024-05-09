@@ -20,7 +20,7 @@ export const deleteService = async (serviceId) => {
   }
 };
 
-export const updateSerivce = async (serviceId, updatedService) => {
+export const updateService = async (serviceId, updatedService) => {
   try {
     await api.put(`/services/${serviceId}`, updatedService);
     console.log("Service updated successfully!");

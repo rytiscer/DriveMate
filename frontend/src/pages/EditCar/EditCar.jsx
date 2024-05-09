@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TextField, Button, Grid, Container } from "@mui/material";
+import { TextField, Button, Grid, Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getCarById, updateCar } from "../../api/cars";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +58,9 @@ const EditCar = () => {
 
   return (
     <Container maxWidth="md">
+      <Typography variant="h4" component="h2" gutterBottom>
+        Edit Car
+      </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={6}>

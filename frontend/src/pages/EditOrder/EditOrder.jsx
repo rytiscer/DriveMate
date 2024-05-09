@@ -90,7 +90,7 @@ const EditOrder = () => {
 
   return (
     <Container>
-      <Typography variant="h2" component="h2" gutterBottom>
+      <Typography variant="h4" component="h2" gutterBottom>
         Edit Order
       </Typography>
       <form onSubmit={handleSubmit}>

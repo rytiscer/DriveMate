@@ -11,7 +11,9 @@ import EditClient from "../pages/EditClient/EditClient";
 import AddClient from "../pages/AddClient/AddClient";
 import AddOrder from "../pages/AddOrder/AddOrder";
 import Service from "../pages/Service/Service";
+import AddService from "../pages/AddService/AddService";
 import EditOrder from "../pages/EditOrder/EditOrder";
+import EditService from "../pages/EditService/EditService";
 
 export const ROUTES = {
   MAIN: "/",
@@ -28,7 +30,9 @@ export const ROUTES = {
   NEW_ORDER: "/orders/add",
   EDIT_ORDER: "/orders/edit/:id",
 
-  SERVICE: "/service",
+  SERVICE: "/services",
+  NEW_SERVICE: "/services/add",
+  EDIT_SERVICE: "/services/edit/:id",
 
   REGISTER: "/register",
   LOGIN: "/login",
@@ -100,6 +104,16 @@ export const routes = [
     Component: EditOrder,
     Layout: BasicLayout,
   },
+  {
+    path: ROUTES.NEW_SERVICE,
+    Component: AddService,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.EDIT_SERVICE,
+    Component: EditService,
+    Layout: BasicLayout,
+  },
 ];
 
 export const navigationBarLinks = [
@@ -120,7 +134,7 @@ export const navigationBarLinks = [
     path: ROUTES.ORDERS,
   },
   {
-    title: "Service notes",
+    title: "Cars notes",
     path: ROUTES.SERVICE,
   },
 ];
