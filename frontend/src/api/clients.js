@@ -1,4 +1,4 @@
-import api from "./api"; // Importuojame jūsų sukurta api instanciją
+import api from "./api";
 
 export const fetchClients = async () => {
   const response = await api.get("/clients");
@@ -20,7 +20,7 @@ export const deleteClient = async (clientId) => {
   }
 };
 
-export const editClient = async (clientId, updatedClient) => {
+export const updateClient = async (clientId, updatedClient) => {
   try {
     await api.put(`/clients/${clientId}`, updatedClient);
     console.log("Client updated successfully!");

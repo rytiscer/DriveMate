@@ -20,7 +20,7 @@ export const deleteOrder = async (orderId) => {
   }
 };
 
-export const editOrder = async (orderId, updatedOrder) => {
+export const updateOrder = async (orderId, updatedOrder) => {
   try {
     await api.put(`/orders/${orderId}`, updatedOrder);
     console.log("Order updated successfully!");

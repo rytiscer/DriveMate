@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getCarById, editCar } from "../../api/cars";
+import { getCarById, updateCar } from "../../api/cars";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routes/consts";
 
 const EditCar = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     brand: "",
@@ -40,11 +43,16 @@ const EditCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const confirmed = window.confirm(
+      "Are you sure you want to update this car?"
+    );
+    if (!confirmed) return;
     try {
-      await editCar(id, formData);
-      console.log("Car updated successfully!");
+      await updateCar(id, formData);
+      alert("Car updated successfully!");
+      navigate(ROUTES.CARS);
     } catch (error) {
-      console.error("Error updating car:", error);
+      alert("Error updating car:", error);
     }
   };
 

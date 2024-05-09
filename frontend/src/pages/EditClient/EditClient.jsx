@@ -9,12 +9,15 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routes/consts";
 import { useParams } from "react-router-dom";
-import { getClientById, editClient } from "../../api/clients";
+import { getClientById, updateClient } from "../../api/clients";
 import { fetchCars } from "../../api/cars";
 
 const EditClient = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -59,11 +62,16 @@ const EditClient = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const confirmed = window.confirm(
+      "Are you sure you want to update this client?"
+    );
+    if (!confirmed) return;
     try {
-      await editClient(id, formData);
-      console.log("Client updated successfully!");
+      await updateClient(id, formData);
+      alert("Client updated successfully!");
+      navigate(ROUTES.CLIENTS);
     } catch (error) {
-      console.error("Error updating client:", error);
+      alert("Error updating client:", error);
     }
   };
 

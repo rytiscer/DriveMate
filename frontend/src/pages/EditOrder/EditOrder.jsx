@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCars } from "../../api/cars";
 import { fetchClients } from "../../api/clients";
-import { getOrderById, editOrder } from "../../api/orders";
+import { getOrderById, updateOrder } from "../../api/orders";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/consts";
 import {
@@ -70,7 +70,7 @@ const EditOrder = () => {
     );
     if (!confirmed) return;
     try {
-      await editOrder(id, formData);
+      await updateOrder(id, formData);
       alert("Order updated successfully!");
       navigate(ROUTES.ORDERS);
     } catch (error) {

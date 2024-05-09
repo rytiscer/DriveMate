@@ -15,7 +15,6 @@ export const registerUser = async (userData) => {
   }
 };
 
-// Funkcija, skirta prisijungti vartotojui
 export const loginUser = async (userData) => {
   try {
     const response = await axios.post(`${API}/login`, userData);
