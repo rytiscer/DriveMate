@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { fetchOrders, deleteOrder } from "../../api/orders";
 import { fetchClients } from "../../api/clients";
 import { fetchCars } from "../../api/cars";
+import styles from "../Orders/Orders.module.scss";
+import MainButton from "../../components/Button/MainButton";
 import {
   Card,
   CardContent,
@@ -66,22 +68,23 @@ const Orders = () => {
 
   return (
     <Container>
-      <h2>Orders</h2>
+      <div className={styles.ordersTopContainer}>
+        <div className={styles.topRight}>
+          <h1>Orders</h1>
+        </div>
+        <Link to="/orders/add">
+          <MainButton className={styles.addButton}>Add Client</MainButton>
+        </Link>
+      </div>
       <Grid container spacing={2}>
         {orders.map((order) => (
           <Grid item xs={12} md={6} lg={4} key={order._id}>
             <Card>
-              <CardContent>
+              <CardContent style={{ minHeight: "250px" }}>
                 {clients[order.clientId] ? (
                   <>
                     <Typography variant="h5" component="div">
                       Client Name: {clients[order.clientId]}
-                    </Typography>
-                    <Typography variant="body1" component="div">
-                      Email: {clients[order.clientId].email}
-                    </Typography>
-                    <Typography variant="body1" component="div">
-                      Phone: {clients[order.clientId].phone}
                     </Typography>
                   </>
                 ) : (
@@ -117,7 +120,7 @@ const Orders = () => {
                 )}
               </CardContent>
               <CardActions>
-                <Link to={`/clients/edit/${order._id}`}>
+                <Link to={`/orders/edit/${order._id}`}>
                   <Button size="small">Edit</Button>
                 </Link>
                 <Button

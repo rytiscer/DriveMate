@@ -1,5 +1,3 @@
-// import axios from "axios";
-// import { API } from "./consts";
 import api from "./api";
 
 // export const fetchCars = async () => {

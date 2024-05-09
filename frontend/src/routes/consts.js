@@ -10,6 +10,8 @@ import Login from "../pages/Login/Login";
 import EditClient from "../pages/EditClient/EditClient";
 import AddClient from "../pages/AddClient/AddClient";
 import AddOrder from "../pages/AddOrder/AddOrder";
+import Service from "../pages/Service/Service";
+import EditOrder from "../pages/EditOrder/EditOrder";
 
 export const ROUTES = {
   MAIN: "/",
@@ -21,8 +23,13 @@ export const ROUTES = {
   CLIENTS: "/clients",
   NEW_CLIENT: "/clients/add",
   EDIT_CLIENT: "/clients/edit/:id",
+
   ORDERS: "/orders",
   NEW_ORDER: "/orders/add",
+  EDIT_ORDER: "/orders/edit/:id",
+
+  SERVICE: "/service",
+
   REGISTER: "/register",
   LOGIN: "/login",
 };
@@ -83,6 +90,16 @@ export const routes = [
     Component: AddOrder,
     Layout: BasicLayout,
   },
+  {
+    path: ROUTES.SERVICE,
+    Component: Service,
+    Layout: BasicLayout,
+  },
+  {
+    path: ROUTES.EDIT_ORDER,
+    Component: EditOrder,
+    Layout: BasicLayout,
+  },
 ];
 
 export const navigationBarLinks = [
@@ -101,5 +118,9 @@ export const navigationBarLinks = [
   {
     title: "Orders",
     path: ROUTES.ORDERS,
+  },
+  {
+    title: "Service notes",
+    path: ROUTES.SERVICE,
   },
 ];

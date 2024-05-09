@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { fetchClients } from "../../api/clients";
+import { useParams } from "react-router-dom";
 import { fetchCars } from "../../api/cars";
-import { createOrder } from "../../api/orders";
+import { fetchClients } from "../../api/clients";
+import { getOrderById, editOrder } from "../../api/orders";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/consts";
 import {
@@ -13,7 +14,8 @@ import {
   MenuItem,
 } from "@mui/material";
 
-const AddOrder = () => {
+const EditOrder = () => {
+  const { id } = useParams();
   const [clients, setClients] = useState([]);
   const [cars, setCars] = useState([]);
   const [formData, setFormData] = useState({
@@ -35,13 +37,24 @@ const AddOrder = () => {
 
         const carsData = await fetchCars();
         setCars(carsData);
+
+        const orderData = await getOrderById(id);
+        setFormData({
+          clientId: orderData.clientId,
+          carId: orderData.carId,
+          startDate: orderData.startDate,
+          endDate: orderData.endDate,
+          pickupLocation: orderData.pickupLocation,
+          returnLocation: orderData.returnLocation,
+          totalPrice: orderData.totalPrice,
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     setFormData({
@@ -53,24 +66,22 @@ const AddOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const confirmed = window.confirm(
-      "Are you sure you want to add this order?"
+      "Are you sure you want to update this order?"
     );
     if (!confirmed) return;
     try {
-      const totalPrice = calculateTotalPrice(formData);
-      const newOrder = { ...formData, totalPrice };
-      await createOrder(newOrder);
-      alert("Order added successfully!");
+      await editOrder(id, formData);
+      alert("Order updated successfully!");
       navigate(ROUTES.ORDERS);
     } catch (error) {
-      alert("Error adding order:", error);
+      alert("Error updating order:", error);
     }
   };
 
-  const calculateTotalPrice = (formData) => {
+  const calculateTotalPrice = () => {
     const { carId, startDate, endDate } = formData;
     const car = cars.find((car) => car._id === carId);
-    if (!car) return 0; // Patikriname, ar car yra apibrėžtas
+    if (!car) return 0;
     const start = new Date(startDate);
     const end = new Date(endDate);
     const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
@@ -80,7 +91,7 @@ const AddOrder = () => {
   return (
     <Container>
       <Typography variant="h2" component="h2" gutterBottom>
-        Add New Order
+        Edit Order
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -171,15 +182,15 @@ const AddOrder = () => {
               fullWidth
               label="Total Price"
               name="totalPrice"
-              value={calculateTotalPrice(formData)} // Atvaizduojame totalPrice
+              value={calculateTotalPrice()}
               InputProps={{
-                readOnly: true, // Naudotojas negali keisti šio lauko
+                readOnly: true,
               }}
             />
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
-              Add Order
+              Update Order
             </Button>
           </Grid>
         </Grid>
@@ -188,4 +199,4 @@ const AddOrder = () => {
   );
 };
 
-export default AddOrder;
+export default EditOrder;
