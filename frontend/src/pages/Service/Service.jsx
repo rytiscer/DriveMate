@@ -81,6 +81,7 @@ const Services = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <FormControlLabel
+            className={styles.checkbox}
             control={
               <Checkbox
                 checked={showAll}
@@ -100,7 +101,11 @@ const Services = () => {
           <Grid item xs={12} sm={6} md={4} lg={3} key={service._id}>
             <Card>
               <CardContent
-                style={{ backgroundColor: getStatusColor(service.status) }}
+                style={{
+                  height: "120px",
+                  overflow: "hidden",
+                  backgroundColor: getStatusColor(service.status),
+                }}
               >
                 <Typography gutterBottom variant="h5" component="div">
                   Car: {service.carName}

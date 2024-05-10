@@ -97,7 +97,7 @@ const Orders = () => {
               {orders.map((order) => (
                 <Grid item xs={12} md={6} lg={4} key={order._id}>
                   <Card>
-                    <CardContent style={{ minHeight: "220px" }}>
+                    <CardContent style={{ minHeight: "200px" }}>
                       {clients[order.clientId] ? (
                         <>
                           <Typography variant="h5" component="div">
