@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,6 +16,8 @@ import styles from "../NavigationBar/NavigationBar.module.scss";
 import logo from "../../assets/logo.png";
 import { navigationBarLinks } from "../../routes/consts";
 import { useNavigate } from "react-router-dom";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const settings = ["Profile"];
 
@@ -165,9 +166,9 @@ function NavigationBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {isLoggedIn ? (
-                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                  <LogoutIcon sx={{ fontSize: 35, color: "#2f7ce0" }} />
                 ) : (
-                  <MenuIcon />
+                  <LoginIcon sx={{ fontSize: 35, color: "#2f7ce0" }} />
                 )}
               </IconButton>
             </Tooltip>

@@ -2,8 +2,20 @@
   max-width: 1250px;
   margin: 0 auto;
   padding-top: 3rem;
+  min-height: 100vh;
 
   @media only screen and (max-width: 600px) {
     padding: 3rem 1rem 0rem 1rem;
   }
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
