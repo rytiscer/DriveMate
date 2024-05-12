@@ -26,3 +26,15 @@ export const loginUser = async (userData) => {
     throw error;
   }
 };
+
+export const checkExistingUser = async (email) => {
+  try {
+    const response = await axios.get(`${API}/users/${email}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+};
