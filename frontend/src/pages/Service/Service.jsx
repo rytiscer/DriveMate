@@ -20,6 +20,17 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showAll, setShowAll] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const checkAuthentication = () => {
+    const jwt = localStorage.getItem("token");
+    return jwt ? true : false;
+  };
+
+  useEffect(() => {
+    const isAuthenticated = checkAuthentication();
+    setIsAuthenticated(isAuthenticated);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,70 +80,79 @@ const Services = () => {
 
   return (
     <>
-      <div className={styles.servicesTopContainer}>
-        <div className={styles.topRight}>
-          <h1>Services</h1>
-          <TextField
-            className={styles.searchField}
-            label="Search"
-            variant="outlined"
-            size="small"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <FormControlLabel
-            className={styles.checkbox}
-            control={
-              <Checkbox
-                checked={showAll}
-                onChange={handleShowAll}
-                color="primary"
-              />
-            }
-            label="Show All"
-          />
+      {!isAuthenticated && (
+        <div className={styles.errorMessage}>
+          Please log in to view service notes
         </div>
-        <Link to="/services/add">
-          <MainButton className={styles.addButton}>Add Service</MainButton>
-        </Link>
-      </div>
-      <Grid container spacing={2}>
-        {filteredServices.map((service) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={service._id}>
-            <Card>
-              <CardContent
-                style={{
-                  height: "120px",
-                  overflow: "hidden",
-                  backgroundColor: getStatusColor(service.status),
-                }}
-              >
-                <Typography gutterBottom variant="h5" component="div">
-                  Car: {service.carName}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Note: {service.note}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Status: {service.status}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Link to={`/services/edit/${service._id}`}>
-                  <Button size="small">Edit</Button>
-                </Link>
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => handleDeleteService(service._id)}
-                >
-                  Delete
-                </Button>
-              </CardActions>
-            </Card>
+      )}
+      {isAuthenticated && (
+        <>
+          <div className={styles.servicesTopContainer}>
+            <div className={styles.topRight}>
+              <h1>Services</h1>
+              <TextField
+                className={styles.searchField}
+                label="Search"
+                variant="outlined"
+                size="small"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <FormControlLabel
+                className={styles.checkbox}
+                control={
+                  <Checkbox
+                    checked={showAll}
+                    onChange={handleShowAll}
+                    color="primary"
+                  />
+                }
+                label="Show All"
+              />
+            </div>
+            <Link to="/services/add">
+              <MainButton className={styles.addButton}>Add Service</MainButton>
+            </Link>
+          </div>
+          <Grid container spacing={2}>
+            {filteredServices.map((service) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={service._id}>
+                <Card>
+                  <CardContent
+                    style={{
+                      height: "120px",
+                      overflow: "hidden",
+                      backgroundColor: getStatusColor(service.status),
+                    }}
+                  >
+                    <Typography gutterBottom variant="h5" component="div">
+                      Car: {service.carName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Note: {service.note}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Status: {service.status}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Link to={`/services/edit/${service._id}`}>
+                      <Button size="small">Edit</Button>
+                    </Link>
+                    <Button
+                      size="small"
+                      color="error"
+                      onClick={() => handleDeleteService(service._id)}
+                    >
+                      Delete
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      )}
     </>
   );
 };

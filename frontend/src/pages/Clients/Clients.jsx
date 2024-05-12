@@ -21,15 +21,15 @@ const Clients = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const isAuthenticated = checkAuthentication();
-    setIsAuthenticated(isAuthenticated);
-  }, []);
-
   const checkAuthentication = () => {
     const jwt = localStorage.getItem("token");
     return jwt ? true : false;
   };
+
+  useEffect(() => {
+    const isAuthenticated = checkAuthentication();
+    setIsAuthenticated(isAuthenticated);
+  }, []);
 
   useEffect(() => {
     const fetchClientData = async () => {

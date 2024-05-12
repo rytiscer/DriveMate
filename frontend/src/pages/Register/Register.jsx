@@ -1,39 +1,57 @@
 import { useState } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
-import { registerUser } from "../../api/users";
+import { registerUser, checkExistingUser } from "../../api/users";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routes/consts";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const existingUser = await checkExistingUser(formData.email);
+    if (existingUser) {
+      setError("Error. Email already exists");
+      return;
+    }
+
     try {
       const response = await registerUser(formData);
       console.log(response);
-      // Papildomos veiksmų, pvz., persiuntimas į prisijungimo puslapį
+      const confirmed = window.confirm(
+        "Are you sure you want to add this car?"
+      );
+      if (!confirmed) return;
+      alert("User created successfully!");
+      navigate(ROUTES.LOGIN);
     } catch (error) {
       console.error(error.message);
+      setError("Error. Email already exists");
     }
   };
 
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" align="center" gutterBottom>
-        Registracija
+        Registration
       </Typography>
+      {error && <Typography color="error">{error}</Typography>}{" "}
       <form onSubmit={handleSubmit}>
         <TextField
           label="Full name"
           name="fullName"
-          value={formData.name}
+          value={formData.fullName}
           onChange={handleChange}
           variant="outlined"
           fullWidth

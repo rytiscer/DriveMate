@@ -21,6 +21,7 @@ const Login = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -32,7 +33,11 @@ const Login = () => {
       navigate("/cars");
       window.location.reload();
     } catch (error) {
-      setError(error.message);
+      if (error.response && error.response.status === 401) {
+        setError("Incorrect email or password");
+      } else {
+        setError("Error. Please try again");
+      }
     }
     setLoading(false);
   };
@@ -73,7 +78,7 @@ const Login = () => {
           fullWidth
           disabled={loading}
         >
-          {loading ? <CircularProgress size={24} /> : "Prisijungti"}
+          {loading ? <CircularProgress size={24} /> : "Login"}
         </Button>
       </form>
     </Container>

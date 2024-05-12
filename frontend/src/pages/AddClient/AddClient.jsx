@@ -132,7 +132,12 @@ const AddClient = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          style={{ marginTop: "20px" }}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           Add Client
         </Button>
       </form>
