@@ -13,34 +13,22 @@ DriveMate is an internal system designed for a car rental company to streamline 
 
 To run the application, follow these steps:
 1. Clone the repository:
-`
-git clone https://github.com/rytiscer/DriveMate.git
-`
+`git clone https://github.com/rytiscer/DriveMate.git`
 3. Navigate to the backend directory:
-`
-cd backend
-`
+`cd backend`
 4. Update the .env file with your configuration variables.
 5. Install dependencies with:
-```npm install```
+`npm install`
 6. Start the development server with:
-   `
-   nodemon index.js
-   `
+`nodemon index.js `
 7. Open a new terminal tab.
 8. Navigate to the frontend directory:
-`
-cd frontend
-`
-10. Install dependencies:
-   `
-   npm install
-   `
-   9. Start the frontend server:
-       `
-       npm run dev
-       `
-      10. View the application in your browser by going to [http://localhost:5173/](http://localhost:5173/)
+`cd frontend`
+9. Install dependencies:
+`npm install `
+10. Start the frontend server:
+ ` npm run dev `
+11. View the application in your browser by going to [http://localhost:5173/](http://localhost:5173/)
 
 ## Technologies Used
 
