@@ -19,8 +19,8 @@ const Cars = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const isAuthenticated = checkAuthentication(); // Patikriname autentifikaciją
-    setIsAuthenticated(isAuthenticated); // Nustatome autentifikacijos būseną
+    const isAuthenticated = checkAuthentication();
+    setIsAuthenticated(isAuthenticated);
   }, []);
 
   useEffect(() => {

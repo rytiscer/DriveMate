@@ -19,8 +19,6 @@ import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-const settings = ["Profile"];
-
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -174,7 +172,7 @@ function NavigationBar() {
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
-              id="menu-appbar"
+              id="menu-appbar-user"
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
@@ -189,25 +187,18 @@ function NavigationBar() {
               onClose={handleCloseUserMenu}
             >
               {isLoggedIn ? (
-                <>
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                  <MenuItem onClick={handleLogout}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                </>
+                <MenuItem onClick={handleLogout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               ) : (
-                <>
-                  <MenuItem onClick={handleLogin}>
+                [
+                  <MenuItem key="login" onClick={handleLogin}>
                     <Typography textAlign="center">Login</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleRegister}>
+                  </MenuItem>,
+                  <MenuItem key="register" onClick={handleRegister}>
                     <Typography textAlign="center">Register</Typography>
-                  </MenuItem>
-                </>
+                  </MenuItem>,
+                ]
               )}
             </Menu>
           </Box>

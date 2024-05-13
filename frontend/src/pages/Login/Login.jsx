@@ -5,7 +5,6 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = () => {
     navigate("/cars");
-    console.log("User logged in successfully!");
   };
 
   return <LoginForm onLogin={handleLogin} />;
