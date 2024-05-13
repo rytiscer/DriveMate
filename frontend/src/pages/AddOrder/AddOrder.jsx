@@ -60,7 +60,6 @@ const AddOrder = () => {
       const totalPrice = calculateTotalPrice(formData);
       const newOrder = { ...formData, totalPrice };
       await createOrder(newOrder);
-      alert("Order updated successfully!");
       navigate(ROUTES.ORDERS);
     } catch (error) {
       alert("Error adding order:", error);
@@ -70,7 +69,7 @@ const AddOrder = () => {
   const calculateTotalPrice = (formData) => {
     const { carId, startDate, endDate } = formData;
     const car = cars.find((car) => car._id === carId);
-    if (!car) return 0; // Patikriname, ar car yra apibrėžtas
+    if (!car) return 0;
     const start = new Date(startDate);
     const end = new Date(endDate);
     const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
@@ -171,9 +170,9 @@ const AddOrder = () => {
               fullWidth
               label="Total Price"
               name="totalPrice"
-              value={calculateTotalPrice(formData)} // Atvaizduojame totalPrice
+              value={calculateTotalPrice(formData)}
               InputProps={{
-                readOnly: true, // Naudotojas negali keisti šio lauko
+                readOnly: true,
               }}
             />
           </Grid>

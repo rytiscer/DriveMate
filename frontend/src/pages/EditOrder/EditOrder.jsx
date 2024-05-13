@@ -71,7 +71,6 @@ const EditOrder = () => {
     if (!confirmed) return;
     try {
       await updateOrder(id, formData);
-      alert("Order updated successfully!");
       navigate(ROUTES.ORDERS);
     } catch (error) {
       alert("Error updating order:", error);

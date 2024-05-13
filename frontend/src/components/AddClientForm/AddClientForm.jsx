@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -9,16 +9,11 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../routes/consts";
-import { useParams } from "react-router-dom";
-import { getClientById, updateClient } from "../../api/clients";
+import { createClient } from "../../api/clients";
 import { fetchCars } from "../../api/cars";
+import PropTypes from "prop-types";
 
-const EditClient = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
+const AddClientForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
@@ -31,16 +26,6 @@ const EditClient = () => {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const clientData = await getClientById(id);
-        setFormData(clientData);
-      } catch (error) {
-        console.error("Error fetching client data:", error);
-      }
-    };
-    fetchData();
-
     const fetchCarsData = async () => {
       try {
         const carsData = await fetchCars();
@@ -50,7 +35,7 @@ const EditClient = () => {
       }
     };
     fetchCarsData();
-  }, [id]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,15 +47,12 @@ const EditClient = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const confirmed = window.confirm(
-      "Are you sure you want to update this client?"
-    );
-    if (!confirmed) return;
     try {
-      await updateClient(id, formData);
-      navigate(ROUTES.CLIENTS);
+      await createClient(formData);
+      alert("Client added successfully!");
+      onSubmit();
     } catch (error) {
-      alert("Error updating client:", error);
+      console.error("Error adding client:", error);
     }
   };
 
@@ -148,16 +130,19 @@ const EditClient = () => {
           </Grid>
         </Grid>
         <Button
+          style={{ marginTop: "20px" }}
           type="submit"
           variant="contained"
           color="primary"
-          style={{ marginTop: "20px" }}
         >
-          Update Client
+          Add Client
         </Button>
       </form>
     </Container>
   );
 };
+AddClientForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
-export default EditClient;
+export default AddClientForm;

@@ -90,7 +90,7 @@ const Orders = () => {
                 <h1>Orders</h1>
               </div>
               <Link to="/orders/add">
-                <MainButton className={styles.addButton}>Add Client</MainButton>
+                <MainButton className={styles.addButton}>Add Order</MainButton>
               </Link>
             </div>
             <Grid container spacing={2}>

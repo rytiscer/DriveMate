@@ -160,9 +160,9 @@ const Services = () => {
 const getStatusColor = (status) => {
   switch (status) {
     case "Done":
-      return "rgba(119, 231, 137, 0.322)";
+      return "#39964158";
     case "Pending":
-      return "rgba(255, 255, 0, 0.226)";
+      return "#2f7ce06a";
     default:
       return "white";
   }

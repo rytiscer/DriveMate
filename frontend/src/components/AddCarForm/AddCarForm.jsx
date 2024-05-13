@@ -1,14 +1,8 @@
-import { useEffect, useState } from "react";
-import { TextField, Button, Grid, Container, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { getCarById, updateCar } from "../../api/cars";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../routes/consts";
+import { useState } from "react";
+import { TextField, Button, Grid, Container } from "@mui/material";
+import PropTypes from "prop-types";
 
-const EditCar = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
+const AddCarForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -21,18 +15,6 @@ const EditCar = () => {
     price: "",
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const carData = await getCarById(id);
-        setFormData(carData);
-      } catch (error) {
-        console.error("Error fetching car data:", error);
-      }
-    };
-    fetchData();
-  }, [id]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -41,25 +23,13 @@ const EditCar = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const confirmed = window.confirm(
-      "Are you sure you want to update this car?"
-    );
-    if (!confirmed) return;
-    try {
-      await updateCar(id, formData);
-      navigate(ROUTES.CARS);
-    } catch (error) {
-      alert("Error updating car:", error);
-    }
+    onSubmit(formData);
   };
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" component="h2" gutterBottom>
-        Edit Car
-      </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -67,9 +37,10 @@ const EditCar = () => {
               name="brand"
               label="Brand"
               variant="outlined"
-              fullWidth
               value={formData.brand}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -77,9 +48,10 @@ const EditCar = () => {
               name="model"
               label="Model"
               variant="outlined"
-              fullWidth
               value={formData.model}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -87,9 +59,10 @@ const EditCar = () => {
               name="year"
               label="Year"
               variant="outlined"
-              fullWidth
               value={formData.year}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -97,9 +70,10 @@ const EditCar = () => {
               name="color"
               label="Color"
               variant="outlined"
-              fullWidth
               value={formData.color}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -107,9 +81,10 @@ const EditCar = () => {
               name="carType"
               label="Car Type"
               variant="outlined"
-              fullWidth
               value={formData.carType}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -117,9 +92,10 @@ const EditCar = () => {
               name="gearbox"
               label="Gearbox"
               variant="outlined"
-              fullWidth
               value={formData.gearbox}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -127,9 +103,10 @@ const EditCar = () => {
               name="img"
               label="Image URL"
               variant="outlined"
-              fullWidth
               value={formData.img}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -137,9 +114,10 @@ const EditCar = () => {
               name="fuelType"
               label="Fuel Type"
               variant="outlined"
-              fullWidth
               value={formData.fuelType}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
           <Grid item xs={6}>
@@ -147,23 +125,25 @@ const EditCar = () => {
               name="price"
               label="Price"
               variant="outlined"
-              fullWidth
               value={formData.price}
               onChange={handleChange}
+              required
+              fullWidth
             />
           </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Add Car
+            </Button>
+          </Grid>
         </Grid>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          style={{ marginTop: "20px" }}
-        >
-          Update Car
-        </Button>
       </form>
     </Container>
   );
 };
 
-export default EditCar;
+AddCarForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default AddCarForm;
