@@ -5,19 +5,12 @@ DriveMate is an internal system designed for a car rental company to streamline 
 ## Key Features
 
 - **Car Management**: Ability to view, add, edit, and delete cars.
-- **Client Management**: Manage client data, add new clients, edit or delete existing ones.
+- **Client Management**: Manage client data, add new clients, edit, or delete existing ones.
 - **Order Management**: Create new orders, view, edit, or delete existing orders. Each order assigns a car to a client, and the rental price is calculated based on the period the client plans to rent the car.
 - **Car Service**: Register service events, such as technical inspections or oil changes. This helps track the technical condition of cars and plan future maintenance work.
 
-## Technologies Used
+## Getting Started
 
-- **Frontend**: React
-- **Backend**: Node.js
-- **Database**: MongoDB
-
-## Installation
-
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Install dependencies with `npm install`.
-4. Start the development server with `npm start`
+To run the application, follow these steps:
+1. Clone the repository:
+   git clone https://github.com/rytiscer/DriveMate.git
