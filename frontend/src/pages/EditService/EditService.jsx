@@ -56,7 +56,7 @@ const EditService = () => {
         updatedAt: currentTime,
       };
       await updateService(id, newData);
-      console.log("Service updated successfully!");
+      alert("Service updated successfully!");
       navigate("/services");
     } catch (error) {
       console.error("Error updating service:", error);

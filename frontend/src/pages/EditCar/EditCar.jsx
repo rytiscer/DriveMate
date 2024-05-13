@@ -49,7 +49,6 @@ const EditCar = () => {
     if (!confirmed) return;
     try {
       await updateCar(id, formData);
-      alert("Car updated successfully!");
       navigate(ROUTES.CARS);
     } catch (error) {
       alert("Error updating car:", error);
@@ -154,7 +153,12 @@ const EditCar = () => {
             />
           </Grid>
         </Grid>
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: "20px" }}
+        >
           Update Car
         </Button>
       </form>

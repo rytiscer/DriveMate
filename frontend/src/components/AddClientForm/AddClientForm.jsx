@@ -49,7 +49,7 @@ const AddClientForm = ({ onSubmit }) => {
     e.preventDefault();
     try {
       await createClient(formData);
-      console.log("Client added successfully!");
+      alert("Client added successfully!");
       onSubmit();
     } catch (error) {
       console.error("Error adding client:", error);

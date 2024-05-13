@@ -28,7 +28,6 @@ const LoginForm = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Sending data", formData);
     try {
       await loginUser(formData);
       onLogin(); // pranešame tėviniam komponentui, kad prisijungimas pavyko

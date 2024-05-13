@@ -68,7 +68,6 @@ const EditClient = () => {
     if (!confirmed) return;
     try {
       await updateClient(id, formData);
-      alert("Client updated successfully!");
       navigate(ROUTES.CLIENTS);
     } catch (error) {
       alert("Error updating client:", error);
@@ -148,7 +147,12 @@ const EditClient = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: "20px" }}
+        >
           Update Client
         </Button>
       </form>

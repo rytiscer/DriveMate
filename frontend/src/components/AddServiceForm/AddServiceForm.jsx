@@ -59,7 +59,6 @@ const ServiceForm = () => {
         updatedAt: currentTime,
       };
       await createService(newData);
-      alert("Service added successfully!");
       navigate(ROUTES.SERVICE);
     } catch (error) {
       alert("Error adding service:", error);

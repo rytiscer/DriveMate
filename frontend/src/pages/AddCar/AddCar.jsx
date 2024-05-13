@@ -11,7 +11,6 @@ const AddCar = () => {
     if (!confirmed) return;
     try {
       await createCar(formData);
-      alert("Car added successfully!");
       navigate(ROUTES.CARS);
     } catch (error) {
       alert("Error adding car:", error);
