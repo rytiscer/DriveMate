@@ -30,7 +30,7 @@ const LoginForm = ({ onLogin }) => {
     setLoading(true);
     try {
       await loginUser(formData);
-      onLogin(); // pranešame tėviniam komponentui, kad prisijungimas pavyko
+      onLogin();
       navigate("/cars");
       window.location.reload();
     } catch (error) {
