@@ -7,9 +7,9 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        backgroundColor: "white",
-        color: "black",
-        py: 1,
+        backgroundColor: "#2f7ce0",
+        color: "white",
+        py: 3,
         px: 2,
         textAlign: "center",
         boxShadow: "rgba(0, 0, 0, 0.24) 0px 1px 15px",
@@ -17,11 +17,15 @@ const Footer = () => {
       }}
     >
       <Typography variant="body1">
-        DriveMate©2024 All Rights Reserved
+        DriveMate &copy; 2024 All Rights Reserved
       </Typography>
       <Typography variant="body2">
-        Made with love by{" "}
-        <Link href="https://github.com/rytiscer/DriveMate">
+        Made with ❤️ by
+        <Link
+          href="https://github.com/rytiscer/DriveMate"
+          color="inherit"
+          underline="hover"
+        >
           Rytis Černiauskas
         </Link>
       </Typography>
