@@ -13,9 +13,16 @@ export const createClient = async (newClient) => {
 export const deleteClient = async (clientId) => {
   try {
     await api.delete(`/clients/${clientId}`);
-    console.log("Client deleted successfully!");
   } catch (error) {
     console.error("Error deleting client:", error);
+    throw error;
+  }
+};
+export const updateClientCar = async (clientId, carId) => {
+  try {
+    await api.put(`/clients/${clientId}/update-car`, { carId });
+  } catch (error) {
+    console.error("Error updating client car:", error);
     throw error;
   }
 };
@@ -23,7 +30,6 @@ export const deleteClient = async (clientId) => {
 export const updateClient = async (clientId, updatedClient) => {
   try {
     await api.put(`/clients/${clientId}`, updatedClient);
-    console.log("Client updated successfully!");
   } catch (error) {
     console.error("Error updating client:", error);
     throw error;

@@ -19,6 +19,7 @@ app.use("/register", userRoutes);
 app.use("/", userRoutes);
 app.use("/orders", authenticateUser, ordersRoutes);
 app.use("/services", serviceRoutes);
+app.use("/clients", clientsRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on ${port} port`);

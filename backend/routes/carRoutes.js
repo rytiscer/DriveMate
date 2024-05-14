@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
     const car = await client
       .db("demo1")
       .collection("cars")
-      .findOne({ _id: new ObjectId(id) }); // Pakeičiau čia
+      .findOne({ _id: new ObjectId(id) });
     if (!car) {
       return res.status(404).send({ message: "Car not found" });
     }
@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
       .db("demo1")
       .collection("cars")
       .updateOne(
-        { _id: new ObjectId(id) }, // Ir čia
+        { _id: new ObjectId(id) },
         {
           $set: {
             brand,
@@ -120,7 +120,7 @@ router.delete("/:id", async (req, res) => {
     const result = await client
       .db("demo1")
       .collection("cars")
-      .deleteOne({ _id: new ObjectId(id) }); // Ir čia
+      .deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       return res.status(404).send({ message: "Car not found" });

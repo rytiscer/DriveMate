@@ -1,16 +1,6 @@
-import { useState, useEffect } from "react";
-import {
-  TextField,
-  Button,
-  Grid,
-  Container,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { useState } from "react";
+import { TextField, Button, Grid, Container } from "@mui/material";
 import { createClient } from "../../api/clients";
-import { fetchCars } from "../../api/cars";
 import PropTypes from "prop-types";
 
 const AddClientForm = ({ onSubmit }) => {
@@ -22,20 +12,6 @@ const AddClientForm = ({ onSubmit }) => {
     driving_experience: "",
     carId: "",
   });
-
-  const [cars, setCars] = useState([]);
-
-  useEffect(() => {
-    const fetchCarsData = async () => {
-      try {
-        const carsData = await fetchCars();
-        setCars(carsData);
-      } catch (error) {
-        console.error("Error fetching cars data:", error);
-      }
-    };
-    fetchCarsData();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -109,24 +85,6 @@ const AddClientForm = ({ onSubmit }) => {
               value={formData.driving_experience}
               onChange={handleChange}
             />
-          </Grid>
-          <Grid item xs={6}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>Car</InputLabel>
-              <Select
-                name="carId"
-                value={formData.carId}
-                onChange={handleChange}
-                label="Car"
-              >
-                <MenuItem value="">None</MenuItem>
-                {cars.map((car) => (
-                  <MenuItem key={car._id} value={car._id}>
-                    {car.brand} {car.model}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </Grid>
         </Grid>
         <Button

@@ -10,7 +10,7 @@ const Main = () => {
         </h1>
         <h3 className={styles.subtitle}>Streamline car rental management</h3>{" "}
       </div>
-      <div className={styles.image}>
+      <div className={styles.imageContainer}>
         <img src={image} alt="DriveMate Image" className={styles.image} />
       </div>
     </div>

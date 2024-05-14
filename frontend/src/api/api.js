@@ -5,12 +5,11 @@ const api = axios.create({
   baseURL: API,
 });
 
-// Pridėti interceptorių, kad kiekvieną užklausą būtų siunčiamas JWT
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Gauti JWT iš localStorage
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // Pridėti JWT prie užklausos antraštės
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },

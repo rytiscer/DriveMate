@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
-// import styles from "../Button/MainButton.module.scss";
 
 const MainButton = ({ children, ...props }) => {
   return (

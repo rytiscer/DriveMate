@@ -37,9 +37,7 @@ const Cars = () => {
   }, []);
 
   const checkAuthentication = () => {
-    // Gauti JWT iš saugyklos (local storage, cookies ar kt.)
     const jwt = localStorage.getItem("token");
-    // Patikrinti, ar JWT yra ir ar jis teisingas (galbūt patikrinimas serverio pusėje)
     return jwt ? true : false;
   };
 

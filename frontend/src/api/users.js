@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API } from "./consts";
 
-// Funkcija, skirta registruoti naujus vartotojus
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(`${API}/register`, userData);
@@ -18,8 +17,8 @@ export const registerUser = async (userData) => {
 export const loginUser = async (userData) => {
   try {
     const response = await axios.post(`${API}/login`, userData);
-    const token = response.data.token; // Gauti JWT iš atsakymo duomenų
-    localStorage.setItem("token", token); // Išsaugoti JWT į localStorage
+    const token = response.data.token;
+    localStorage.setItem("token", token);
     return token;
   } catch (error) {
     console.error("Error logging in user:", error);

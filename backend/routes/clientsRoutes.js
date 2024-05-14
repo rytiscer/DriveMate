@@ -5,7 +5,6 @@ require("dotenv").config();
 const router = express.Router();
 const client = require("../config/db");
 
-// Get all clients
 router.get("/", async (req, res) => {
   try {
     const data = await client
@@ -20,7 +19,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get a specific client by ID
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -61,18 +59,17 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a client by ID
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { name, lastName, email, phone, driving_experience, carId } =
-      req.body; // Pridėjome carId
+      req.body;
     const result = await client
       .db("demo1")
       .collection("clients")
       .updateOne(
         { _id: new ObjectId(id) },
-        { $set: { name, lastName, email, phone, driving_experience, carId } } // Pridėjome carId
+        { $set: { name, lastName, email, phone, driving_experience, carId } }
       );
     if (result.modifiedCount === 0) {
       return res.status(404).send({ error: "Client not found" });
@@ -84,7 +81,24 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Delete a client by ID
+router.put("/:id/update-car", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { carId } = req.body;
+    const result = await client
+      .db("demo1")
+      .collection("clients")
+      .updateOne({ _id: new ObjectId(id) }, { $set: { carId } });
+    if (result.modifiedCount === 0) {
+      return res.status(404).send({ error: "Client not found" });
+    }
+    res.send({ message: "Client's car updated successfully" });
+  } catch (error) {
+    console.error("Error updating client's car:", error);
+    return res.status(500).send({ error });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;

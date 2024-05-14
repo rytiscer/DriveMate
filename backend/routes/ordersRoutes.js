@@ -42,8 +42,18 @@ router.put("/:id", async (req, res) => {
       endDate,
       pickupLocation,
       returnLocation,
-      totalPrice,
     } = req.body;
+
+    const car = await client
+      .db("demo1")
+      .collection("cars")
+      .findOne({ _id: new ObjectId(carId) });
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+    const totalPrice = car.price * days;
 
     const result = await client
       .db("demo1")
