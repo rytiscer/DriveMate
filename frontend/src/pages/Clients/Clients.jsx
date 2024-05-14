@@ -137,7 +137,7 @@ const Clients = () => {
                       Driving Experience: {client.driving_experience} years
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Car:{" "}
+                      Last used Car:{" "}
                       {carNames[index] !== undefined
                         ? carNames[index]
                         : "No Car Assigned"}

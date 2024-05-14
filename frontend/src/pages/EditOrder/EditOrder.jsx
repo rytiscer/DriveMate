@@ -57,10 +57,22 @@ const EditOrder = () => {
   }, [id]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Jei keičiasi startDate arba endDate, perskaiciuok totalPrice
+    if (name === "startDate" || name === "endDate") {
+      const totalPrice = calculateTotalPrice(); // Perskaiciuoti totalPrice
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+        totalPrice: totalPrice,
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {

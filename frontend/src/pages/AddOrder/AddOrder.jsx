@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchClients } from "../../api/clients";
 import { fetchCars } from "../../api/cars";
 import { createOrder } from "../../api/orders";
+import { updateClientCar } from "../../api/clients";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/consts";
 import {
@@ -50,6 +51,21 @@ const AddOrder = () => {
     });
   };
 
+  const handleCreateOrder = async () => {
+    try {
+      const totalPrice = calculateTotalPrice(formData);
+      const newOrder = { ...formData, totalPrice };
+      await createOrder(newOrder);
+      await updateClientCar(formData.clientId, formData.carId);
+      const updatedClients = await fetchClients();
+      setClients(updatedClients);
+      navigate(ROUTES.ORDERS);
+    } catch (error) {
+      console.error("Error creating order:", error);
+      alert("Error adding order:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const confirmed = window.confirm(
@@ -57,12 +73,9 @@ const AddOrder = () => {
     );
     if (!confirmed) return;
     try {
-      const totalPrice = calculateTotalPrice(formData);
-      const newOrder = { ...formData, totalPrice };
-      await createOrder(newOrder);
-      navigate(ROUTES.ORDERS);
+      await handleCreateOrder();
     } catch (error) {
-      alert("Error adding order:", error);
+      console.error("Error handling order creation:", error);
     }
   };
 

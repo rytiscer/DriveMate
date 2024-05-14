@@ -18,6 +18,14 @@ export const deleteClient = async (clientId) => {
     throw error;
   }
 };
+export const updateClientCar = async (clientId, carId) => {
+  try {
+    await api.put(`/clients/${clientId}/update-car`, { carId });
+  } catch (error) {
+    console.error("Error updating client car:", error);
+    throw error;
+  }
+};
 
 export const updateClient = async (clientId, updatedClient) => {
   try {
