@@ -13,7 +13,6 @@ export const createCar = async (newCar) => {
 export const deleteCar = async (carId) => {
   try {
     await api.delete(`/cars/${carId}`);
-    console.log("Car deleted successfully!");
   } catch (error) {
     console.error("Error deleting car:", error);
     throw error;
@@ -23,7 +22,6 @@ export const deleteCar = async (carId) => {
 export const updateCar = async (carId, updatedCar) => {
   try {
     await api.put(`/cars/${carId}`, updatedCar);
-    console.log("Car updated successfully!");
   } catch (error) {
     console.error("Error updating car:", error);
     throw error;

@@ -13,7 +13,6 @@ export const createOrder = async (newOrder) => {
 export const deleteOrder = async (orderId) => {
   try {
     await api.delete(`/orders/${orderId}`);
-    console.log("Order deleted successfully!");
   } catch (error) {
     console.error("Error deleting order:", error);
     throw error;
@@ -23,7 +22,6 @@ export const deleteOrder = async (orderId) => {
 export const updateOrder = async (orderId, updatedOrder) => {
   try {
     await api.put(`/orders/${orderId}`, updatedOrder);
-    console.log("Order updated successfully!");
   } catch (error) {
     console.error("Error updating order:", error);
     throw error;
