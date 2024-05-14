@@ -84,6 +84,27 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id/update-car", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { carId } = req.body; // Tik automobilio ID
+    const result = await client
+      .db("demo1")
+      .collection("clients")
+      .updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { carId } } // Tik automobilio ID
+      );
+    if (result.modifiedCount === 0) {
+      return res.status(404).send({ error: "Client not found" });
+    }
+    res.send({ message: "Client's car updated successfully" });
+  } catch (error) {
+    console.error("Error updating client's car:", error);
+    return res.status(500).send({ error });
+  }
+});
+
 // Delete a client by ID
 router.delete("/:id", async (req, res) => {
   try {
