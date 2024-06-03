@@ -56,7 +56,6 @@ router.post("/login", async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: "Password is not correct" });
     }
-    i;
     const token = jwt.sign(
       { userId: existingUser._id },
       process.env.JWT_SECRET,
